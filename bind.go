@@ -14,7 +14,6 @@ var MultipartMemory int64 = 64 * 1024 * 1024
 // Bind takes data out of the request and deserializes into a interface obj according
 // to the Content-Type of the request. If no Content-Type is specified, there
 // better be data in the query string, otherwise an error will be produced.
-//
 // A non-nil return value may be an Errors value.
 func Bind(req *http.Request, obj interface{}) error {
 	method := req.Method
@@ -43,7 +42,7 @@ func BindForm(req *http.Request, obj interface{}) error {
 	if err := coerce(obj, req.Form, nil); err != nil {
 		return err
 	}
-	return validate(obj)
+	return validate(obj, "form")
 }
 
 func BindMultipart(req *http.Request, obj interface{}) error {
@@ -53,14 +52,14 @@ func BindMultipart(req *http.Request, obj interface{}) error {
 	if err := coerce(obj, req.Form, req.MultipartForm.File); err != nil {
 		return err
 	}
-	return validate(obj)
+	return validate(obj, "form")
 }
 
 func BindURL(req *http.Request, obj interface{}) error {
 	if err := coerce(obj, req.URL.Query(), nil); err != nil {
 		return err
 	}
-	return validate(obj)
+	return validate(obj, "form")
 }
 
 func BindJson(req *http.Request, obj interface{}) error {
@@ -68,5 +67,5 @@ func BindJson(req *http.Request, obj interface{}) error {
 	if err != nil {
 		return fmt.Errorf("%v: %v", ERR_DECODE_JSON, err.Error())
 	}
-	return validate(obj)
+	return validate(obj, "json")
 }

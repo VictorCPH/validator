@@ -28,15 +28,18 @@ func isIn(str string, values []string) bool {
 	return false
 }
 
-func request(method, path, body string) *http.Request {
+func request(method, path, body, contentType string) *http.Request {
 	req, err := http.NewRequest(method, path, bytes.NewBufferString(body))
 	if err != nil {
 		panic(err)
 	}
+	if contentType != "" {
+		req.Header.Add("Content-type", contentType)
+	}
 	return req
 }
 
-func requestMultipartForm(method, path string, params map[string]string, files map[string]string) *http.Request {
+func requestMultipartForm(path string, params map[string]string, files map[string]string) *http.Request {
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
 
@@ -68,7 +71,7 @@ func requestMultipartForm(method, path string, params map[string]string, files m
 		panic(err)
 	}
 
-	req, err := http.NewRequest(method, path, body)
+	req, err := http.NewRequest("POST", path, body)
 	if err != nil {
 		panic(err)
 	}
