@@ -13,7 +13,7 @@ type JsonParam struct {
 	Score     float32   `json:"score" valid:"required"`
 	Area      float64   `json:"area" valid:"required"`
 	Friends   []string  `json:"friends" valid:"required"`
-	Scores    []float32 `form:"scores" valid:"required"`
+	Scores    []float32 `json:"scores" valid:"required"`
 	ExtraInfo string    `json:"extra_info" valid:"required"`
 }
 
@@ -30,8 +30,7 @@ func TestJson(t *testing.T) {
 		"extra_info": "hello world"
 	}`
 
-	req := request("POST", "/", body)
-	req.Header.Add("Content-type", ContentTypeJson)
+	req := request("POST", "/", body, ContentTypeJson)
 
 	err := Bind(req, &obj)
 	assert.NoError(t, err)

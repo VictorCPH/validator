@@ -41,10 +41,9 @@ func testBindForm(t *testing.T, method string) {
 
 	var req *http.Request
 	if method == "GET" {
-		req = request(method, "/?"+body.Encode(), "")
+		req = request(method, "/?"+body.Encode(), "", "")
 	} else {
-		req = request(method, "/", body.Encode())
-		req.Header.Add("Content-type", ContentTypeForm)
+		req = request(method, "/", body.Encode(), ContentTypeForm)
 	}
 
 	err := Bind(req, &obj)

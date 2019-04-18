@@ -17,7 +17,7 @@ func TestMultipartForm(t *testing.T) {
 	params := map[string]string{"name": "Tony"}
 	files := map[string]string{"image": "testdata/Go-Logo_Aqua.jpg"}
 
-	req := requestMultipartForm("POST", "/", params, files)
+	req := requestMultipartForm("/", params, files)
 
 	err := Bind(req, &obj)
 	assert.NoError(t, err)
