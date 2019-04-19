@@ -22,7 +22,7 @@ type optionalWithDefaultParam struct {
 }
 
 type regexpTagParam struct {
-	Name string `form:"name" valid:"required" regexp:"[A-Za-z0-9]+"`
+	Name string `form:"name" valid:"required" regexp:"^[a-zA-Z_][a-zA-Z_]*$"`
 }
 
 type valuesTagParam struct {
@@ -101,7 +101,7 @@ func TestRegexpTag(t *testing.T) {
 	req := request("POST", "/", badBody.Encode(), ContentTypeForm)
 	err := Bind(req, &obj)
 	assert.Error(t, err)
-	assert.Equal(t, "name: wrong format, shold match regexp `[A-Za-z0-9]+`", err.Error())
+	assert.Equal(t, "name: wrong format, shold match regexp `^[a-zA-Z_][a-zA-Z_]*$`", err.Error())
 }
 
 func TestValuesTag(t *testing.T) {

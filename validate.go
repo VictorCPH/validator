@@ -43,11 +43,12 @@ func validateField(v reflect.Value, tag reflect.StructTag) (err error) {
 		}
 		if len(tag.Get("regexp")) != 0 {
 			re := regexp.MustCompile(tag.Get("regexp"))
-			if !re.Match([]byte(v.String())) {
+			if !re.MatchString(v.String()) {
 				return fmt.Errorf(ERR_WRONG_FORMAT, re)
 			}
 		}
 	case reflect.Slice:
+		// []byte
 		var typeOfBytes = reflect.TypeOf([]byte(nil))
 		if tag.Get("type") == "file" && v.Type() == typeOfBytes {
 			if len(tag.Get("max_size")) != 0 {
@@ -58,6 +59,13 @@ func validateField(v reflect.Value, tag reflect.StructTag) (err error) {
 				if len(v.Bytes()) > int(max_size) {
 					return fmt.Errorf(ERR_PARAM_FILE_TOO_LARGE, max_size)
 				}
+			}
+		}
+		// Other
+		for i := 0; i < v.Len(); i++ {
+			err = validateField(v.Index(i), tag)
+			if err != nil {
+				return err
 			}
 		}
 	case reflect.Int:
