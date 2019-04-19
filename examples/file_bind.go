@@ -10,7 +10,7 @@ import (
 
 type fileParam struct {
 	Image []byte `form:"image" valid:"required" type:"file" max_size:"61440"`
-	Name  string `form:"name" json:"name" valid:"required" regexp:"^[a-zA-Z_][a-zA-Z_]*$"`
+	Name  string `form:"name" valid:"required" regexp:"^[a-zA-Z_][a-zA-Z_]*$"`
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
