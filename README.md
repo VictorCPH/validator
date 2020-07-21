@@ -1,5 +1,7 @@
 # Validator
 
+[![Build Status](https://travis-ci.org/VictorCPH/validator.svg?branch=master)](https://travis-ci.org/VictorCPH/validator)
+
 Validator is a http request parameters checker.
 
 ## Installation
@@ -23,7 +25,7 @@ import "github.com/VictorCPH/validator"
 ### Basic
 
 ```golang
-// examples/basic.go
+// examples/basic/main.go
 package main
 
 import (
@@ -64,8 +66,8 @@ func main() {
 ```
 
 ```sh
-# run examples/basic.go and visit localhost:8080
-$ go run examples/basic.go
+# run examples/basic/main.go and visit localhost:8080
+$ go run examples/basic/main.go
 ```
 
 Test it with form:
@@ -100,7 +102,7 @@ $ curl -v -XPOST "localhost:8080" \
 ### Multipart file
 
 ```golang
-// examples/file_bind.go
+// examples/file_bind/main.go
 package main
 
 import (
@@ -133,6 +135,11 @@ func main() {
 }
 ```
 
+```sh
+# run examples/file_bind/main.go and visit localhost:8080
+$ go run examples/file_bind/main.go
+```
+
 Test it with:
 
 ```sh
@@ -144,7 +151,7 @@ $ curl -v -XPOST "localhost:8080" \
 ### Base64 string
 
 ```golang
-// examples/base64_bind.go
+// examples/base64_bind/main.go
 package main
 
 import (
@@ -174,6 +181,11 @@ func main() {
 	fmt.Println("Listening on port: 8080")
 	http.ListenAndServe(":8080", nil)
 }
+```
+
+```sh
+# run examples/base64_bind/main.go and visit localhost:8080
+$ go run examples/base64_bind/main.go
 ```
 
 Test it with:
